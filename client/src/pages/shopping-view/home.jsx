@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
+import React, { useRef } from "react";
+import classNames from "classnames";
+import { motion } from "framer-motion"
 import bannerOne from "../../assets/banner-1.webp";
 import bannerTwo from "../../assets/banner-2.webp";
 import bannerThree from "../../assets/banner-3.webp";
+import { useInView } from "react-intersection-observer";
+
 import {
   Airplay,
   BabyIcon,
@@ -30,13 +35,22 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
+import CategoryCard from "@/components/shopping-view/categoryCard";
+import img1 from "../../assets/kora.png";
+import img2 from "../../assets/jamandi.png";
+import Carousel from "@/components/shopping-view/carousel";
+import FastMovingCard from "@/components/shopping-view/fast-moving-card";
+import InstagramFeed from "@/components/shopping-view/instagramFeed";
+import Testimonials from "@/components/shopping-view/testimonials";
+import Banner from "@/components/shopping-view/banner";
 
 const categoriesWithIcon = [
-  { id: "men", label: "Men", icon: ShirtIcon },
-  { id: "women", label: "Women", icon: CloudLightning },
-  { id: "kids", label: "Kids", icon: BabyIcon },
-  { id: "accessories", label: "Accessories", icon: WatchIcon },
-  { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+  { id: "kanjivaram", label: "Kanjivaram", image: img1, description: "Kanjivaram silk sarees are made in Kanchipuram" },
+  { id: "satin", label: "Satin", image: img1, description: "Satin sarees are made from silk" },
+  { id: "gadwal", label: "Gadwal", image: img1, description: "Gadwal sarees are made in Gadwal" },
+  { id: "jamdani", label: "Jamdani", image: img1, description: "Jamdani sarees are made in Bangladesh" },
+  { id: "kora", label: "Kora", image: img1, description: "Kora sarees are made in Kora" },
+  { id: "silk", label: "Silk", image: img1, description: "Silk sarees are made from silk" },
 ];
 
 const brandsWithIcon = [
@@ -47,12 +61,98 @@ const brandsWithIcon = [
   { id: "zara", label: "Zara", icon: Images },
   { id: "h&m", label: "H&M", icon: Heater },
 ];
+
+const featureImageList = [
+  {
+    image: img1,
+    title: "Everyday is a fashion show and the world is your runway",
+    text: "Coco Chanel",
+  },
+  {
+    image: img2,
+    title: "Explore wide range of sareees from different regions",
+    text: "Coco Chanel",
+  },
+  {
+    image: img1,
+    title: "Everyday is a fashion show and the world is your runway",
+    text: "Coco Chanel",
+  },
+]
+
+const sarees = [
+  {
+    title: 'Sarees 1',
+    name: 'Red Silk Saree',
+    img: img1,
+
+  },
+  {
+    title: 'Sarees',
+    name: 'Blue Cotton Saree',
+    img: img1,
+
+  },
+  {
+    name: 'Golden Banarasi Saree',
+    img: img2,
+    title: 'Sarees',
+  },
+  {
+    name: 'Golden Banarasi Saree',
+    img: img2,
+    title: 'Sarees',
+  },
+  {
+    name: 'Golden Banarasi Saree',
+    img: img2,
+    title: 'Sarees',
+  },
+  {
+    name: 'Golden Banarasi Saree',
+    img: img2,
+    title: 'Sarees',
+  },
+];
+
+const posts = [
+  {
+      title: "Beautiful Sunset",
+      description: "A stunning sunset at the beach 🌅.",
+      media: "https://www.instagram.com/reel/DFDDWVASD2l/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==", // Replace with actual image/video URL
+      type: "image", // Can be 'image' or 'video'
+      comments: [
+          { user: "user1", text: "Amazing view!" },
+          { user: "user2", text: "Wish I were there!" },
+      ],
+  },
+  {
+      title: "City Lights",
+      description: "Night vibes in the city 🌃.",
+      media: "https://www.instagram.com/reel/DFDDWVASD2l/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==", // Replace with actual image/video URL
+      type: "image",
+      comments: [
+          { user: "user3", text: "Love the lights!" },
+          { user: "user4", text: "Incredible shot!" },
+      ],
+  },
+  {
+      title: "Waterfall",
+      description: "Peaceful and serene 🏞️.",
+      media: "https://www.instagram.com/reel/DFDDWVASD2l/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==", // Replace with actual image/video URL
+      type: "video",
+      comments: [
+          { user: "user5", text: "So relaxing!" },
+          { user: "user6", text: "Where is this?" },
+      ],
+  },
+];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
-  const { featureImageList } = useSelector((state) => state.commonFeature);
+  // const { featureImageList } = useSelector((state) => state.commonFeature);
 
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
@@ -62,6 +162,35 @@ function ShoppingHome() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const [activeItem, setActiveItem] = useState(0);
+  const wrapperRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const { ref, inView } = useInView({
+    rootMargin: window.innerWidth <= 768 ? "1750px" : "200px",
+    threshold: 0.2,
+  });
+
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    wrapperRef.current.style.setProperty(
+      "--transition",
+      "600ms cubic-bezier(0.22, 0.61, 0.36, 1)"
+    );
+
+    timeoutRef.current = setTimeout(() => {
+      wrapperRef.current?.style.removeProperty("--transition");
+    }, 900);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [activeItem]);
   function handleNavigateToListingPage(getCurrentItem, section) {
     sessionStorage.removeItem("filters");
     const currentFilter = {
@@ -83,7 +212,7 @@ function ShoppingHome() {
         productId: getCurrentProductId,
         quantity: 1,
       })
-    ).then((data) => {
+    ).then((data) => { 
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
@@ -122,69 +251,32 @@ function ShoppingHome() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
-        {featureImageList && featureImageList.length > 0
-          ? featureImageList.map((slide, index) => (
-              <img
-                src={slide?.image}
-                key={index}
-                className={`${
-                  index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
-              />
-            ))
-          : null}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) =>
-                (prevSlide - 1 + featureImageList.length) %
-                featureImageList.length
-            )
-          }
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronLeftIcon className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) => (prevSlide + 1) % featureImageList.length
-            )
-          }
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronRightIcon className="w-4 h-4" />
-        </Button>
+      <div className="relative w-full h-[600px]">
+        <Carousel featureImageList={featureImageList} />
+
       </div>
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-gray-50 -mt-10 md:mt-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Shop by category
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoriesWithIcon.map((categoryItem) => (
-              <Card
-                onClick={() =>
-                  handleNavigateToListingPage(categoryItem, "category")
-                }
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {categoriesWithIcon.map((categoryItem, index) => (
+              <motion.div
+                key={categoryItem.id || index}
+                ref={ref}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{categoryItem.label}</span>
-                </CardContent>
-              </Card>
+                <CategoryCard categoryItem={categoryItem} />
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50">
+      {/* <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -201,7 +293,7 @@ function ShoppingHome() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="py-12">
         <div className="container mx-auto px-4">
@@ -211,16 +303,77 @@ function ShoppingHome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0
               ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
-                ))
+                <ShoppingProductTile
+                  handleGetProductDetails={handleGetProductDetails}
+                  product={productItem}
+                  handleAddtoCart={handleAddtoCart}
+                />
+              ))
               : null}
           </div>
         </div>
       </section>
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Fast Moving Products
+          </h2>
+
+        </div>
+        <div className="flex h-full w-full items-center justify-center px-2">
+          <div className="w-[1200px] max-w-full">
+            <ul
+              ref={wrapperRef}
+              className="group flex flex-col gap-3 md:h-[640px] md:flex-row md:gap-[1.5%]"
+            >
+              {sarees.map((item, index) => (
+                <li
+                  onClick={() => setActiveItem(index)}
+                  aria-current={activeItem === index}
+                  className={classNames(
+                    "relative cursor-pointer md:w-[16%] md:first:w-[16%] md:last:w-[16%] md:[&[aria-current='true']]:w-[48%]",
+                    "md:[transition:width_var(--transition,200ms_ease-in)]",
+                    "md:before-block before:absolute before:bottom-0 before:left-[-10px] before:right-[-10px] before:top-0 before:hidden before:bg-white",
+                    "md:[&:not(:hover),&:not(:first),&:not(:last)]:group-hover:w-[14%] md:hover:w-[20%]",
+                    "first:pointer-events-auto last:pointer-events-auto", // Enable interactions for first and last items
+                    "md:[&_img]:opacity-100"
+                  )}
+                  key={item.name}
+                >
+                  <FastMovingCard item={item} index={index} activeItem={activeItem} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </section>
+
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Checkout our Instagram Feed
+          </h2>
+
+      <InstagramFeed posts={posts} />
+              
+        </div>
+      </section>
+
+      <Banner imageUrl={bannerThree} altText="Banner 3" />
+
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            What Our Customers Say
+          </h2>
+
+          <Testimonials />
+        </div>
+      </section>
+
+
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}

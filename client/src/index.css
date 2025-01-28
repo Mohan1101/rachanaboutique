@@ -2,62 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: 'Playfair Display', serif
+}
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --background: #fdefe4;
+    --foreground: #ae7008;
+    --card: #ffffff;
+    --card-foreground: #333333;
+    --primary: #1c1c1c;
+    --primary-foreground: #f0f0f0;
+    --secondary: #2b2b2b;
+    --secondary-foreground: #e0e0e0;
+    --muted: #2f2f2f;
+    --muted-foreground: #999999;
+    --accent: #F793A0;
+    --accent-foreground: #f0f0f0;
+    --destructive: #e53935;
+    --destructive-foreground: #ffffff;
+    --border: #bdbdbd;
+    --input: #bdbdbd;
+    --ring: #333333;
     --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: #f44336;
+    --chart-2: #2196f3;
+    --chart-3: #4caf50;
+    --chart-4: #ff9800;
+    --chart-5: #9c27b0;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: #222222;
+    --foreground: #f0f0f0;
+    --card: #333333;
+    --card-foreground: #f0f0f0;
+    --primary: #333333;
+    --primary-foreground: #f0f0f0;
+    --secondary: #444444;
+    --secondary-foreground: #f0f0f0;
+    --muted: #555555;
+    --muted-foreground: #cccccc;
+    --accent: #666666;
+    --accent-foreground: #f0f0f0;
+    --destructive: #d32f2f;
+    --destructive-foreground: #ffffff;
+    --border: #444444;
+    --input: #444444;
+    --ring: #ffffff;
+    --chart-1: #f44336;
+    --chart-2: #2196f3;
   }
 }
+
 
 @layer base {
   * {
@@ -67,3 +68,137 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+.animate-quote-in {
+  animation: quote-in 1s ease-out forwards;
+  animation-delay: 0.5s; /* adjust the delay to your liking */
+}
+
+.animate-quote-out {
+  animation: none;
+}
+
+@keyframes quote-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes quote-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+.slick-slide>div{
+    margin: 10px;
+}
+.slick-icons {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid red;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.slick-icons:hover {
+  cursor: pointer;
+}
+
+.slick-icons--left,
+.slick-icons--right {
+  font-size: 2rem;
+}
+
+.slick-icons--left {
+ top: -5rem;
+  right: 5rem;
+}
+
+.slick-icons--right {
+  top: -5rem;
+  right: 0rem;
+}
+
+@media screen and (max-width: 768px) {
+  .slick-icons--left {
+    top: -4rem;
+    right: 5rem;
+  }
+
+  .slick-icons--right {
+    top: -4rem;
+    right: 0rem;
+  }
+  
+}
+
+/* Add the following custom animations in your global styles (Tailwind CSS config or a custom file) */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(-5deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.2s forwards;
+}
+
+.animate-shake {
+  animation: shake 0.8s ease-in-out infinite;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-slide-up {
+  animation: fadeSlideUp 1s ease-out forwards;
+}
+

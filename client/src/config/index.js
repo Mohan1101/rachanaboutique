@@ -108,39 +108,19 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/home",
   },
   {
-    id: "products",
-    label: "Products",
+    id: "collections",
+    label: "Collections",
     path: "/shop/listing",
   },
   {
-    id: "men",
-    label: "Men",
+    id: "new-arrivals",
+    label: "New Arrivals",
     path: "/shop/listing",
   },
   {
-    id: "women",
-    label: "Women",
-    path: "/shop/listing",
-  },
-  {
-    id: "kids",
-    label: "Kids",
-    path: "/shop/listing",
-  },
-  {
-    id: "footwear",
-    label: "Footwear",
-    path: "/shop/listing",
-  },
-  {
-    id: "accessories",
-    label: "Accessories",
-    path: "/shop/listing",
-  },
-  {
-    id: "search",
-    label: "Search",
-    path: "/shop/search",
+    id: "contact",
+    label: "Contact",
+    path: "/shop/contact",
   },
 ];
 
@@ -163,19 +143,20 @@ export const brandOptionsMap = {
 
 export const filterOptions = {
   category: [
-    { id: "men", label: "Men" },
-    { id: "women", label: "Women" },
-    { id: "kids", label: "Kids" },
-    { id: "accessories", label: "Accessories" },
-    { id: "footwear", label: "Footwear" },
+    { id: "kanjivaram", label: "Kanjivaram" },
+    { id: "Satin", label: "Satin" },
+    { id: "gadwal", label: "Gadwal" },
+    { id: "jamdani", label: "Jamdani" },
+    { id: "kora", label: "Kora" },
+    { id: "silk", label: "Silk" },
   ],
-  brand: [
-    { id: "nike", label: "Nike" },
-    { id: "adidas", label: "Adidas" },
-    { id: "puma", label: "Puma" },
-    { id: "levi", label: "Levi's" },
-    { id: "zara", label: "Zara" },
-    { id: "h&m", label: "H&M" },
+  price: [
+    { id: "0-1000", label: "0 - 1000" },
+    { id: "1000-2000", label: "1000 - 2000" },
+    { id: "2000-3000", label: "2000 - 3000" },
+    { id: "3000-4000", label: "3000 - 4000" },
+    { id: "4000-5000", label: "4000 - 5000" },
+    { id: "5000-6000", label: "5000 - 6000" },
   ],
 };
 

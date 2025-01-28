@@ -21,7 +21,12 @@ import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
+import ProductDetailsPage from "./pages/shopping-view/product-details-page";
 import SearchProducts from "./pages/shopping-view/search";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -76,12 +81,13 @@ function App() {
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <ShoppingLayout />
-            </CheckAuth>
+            // </CheckAuth>
           }
         >
           <Route path="home" element={<ShoppingHome />} />
+          <Route path="details/:id" element={<ProductDetailsPage />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
@@ -90,7 +96,7 @@ function App() {
           <Route path="search" element={<SearchProducts />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </div>
   );

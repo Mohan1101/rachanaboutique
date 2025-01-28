@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import UserCartItemsContent from "./cart-items-content";
 
-function UserCartWrapper({ cartItems, setOpenCartSheet }) {
+function UserCartWrapper({ cartItems, setOpenCartSheet, onMenuClose }) {
   const navigate = useNavigate();
 
   const totalCartAmount =
@@ -38,6 +38,7 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
       <Button
         onClick={() => {
           navigate("/shop/checkout");
+          onMenuClose();
           setOpenCartSheet(false);
         }}
         className="w-full mt-6"
