@@ -110,12 +110,12 @@ export const shoppingViewHeaderMenuItems = [
   {
     id: "collections",
     label: "Collections",
-    path: "/shop/listing",
+    path: "/shop/collections",
   },
   {
     id: "new-arrivals",
     label: "New Arrivals",
-    path: "/shop/listing",
+    path: "/shop/new-arrivals",
   },
   {
     id: "contact",

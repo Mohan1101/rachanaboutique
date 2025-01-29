@@ -198,7 +198,7 @@ function ShoppingHome() {
     };
 
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-    navigate(`/shop/listing`);
+    navigate(`/shop/collections`);
   }
 
   function handleGetProductDetails(getCurrentProductId) {

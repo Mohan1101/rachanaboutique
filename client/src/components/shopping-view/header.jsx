@@ -47,7 +47,7 @@ function ShoppingHeader() {
   
       sessionStorage.setItem("filters", JSON.stringify(currentFilter));
   
-      location.pathname.includes("listing") && currentFilter !== null
+      location.pathname.includes("collections") && currentFilter !== null
         ? setSearchParams(
             new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
           )

@@ -23,11 +23,11 @@ function ZoomableImage({ imageSrc, imageAlt, onZoomData }) {
     setIsHovering(false);
     onZoomData({ isHovering: false });
   };
-
+  // w-full h-full md:w-4/5 md:h-2/3
   return (
     <div className="flex flex-col gap-4">
       <div
-        className="relative overflow-hidden rounded-lg border shadow-md cursor-pointer"
+        className=" relative overflow-hidden rounded-lg border shadow-md cursor-pointer"
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -36,7 +36,7 @@ function ZoomableImage({ imageSrc, imageAlt, onZoomData }) {
         <img
           src={imageSrc}
           alt={imageAlt}
-          className="w-full h-[400px] object-fit "
+          className="w-full h-full  object-cover "
         />
         {isHovering && (
           <div

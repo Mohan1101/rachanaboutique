@@ -25,6 +25,8 @@ import ProductDetailsPage from "./pages/shopping-view/product-details-page";
 import SearchProducts from "./pages/shopping-view/search";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import NewArrivals from "./pages/shopping-view/new-arrivals";
+import Contact from "./pages/shopping-view/contact";
 
 
 
@@ -88,12 +90,14 @@ function App() {
         >
           <Route path="home" element={<ShoppingHome />} />
           <Route path="details/:id" element={<ProductDetailsPage />} />
-          <Route path="listing" element={<ShoppingListing />} />
+          <Route path="collections" element={<ShoppingListing />} />
+          <Route path="new-arrivals" element={<NewArrivals />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />
+          <Route path="contact" element={<Contact />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         {/* <Route path="*" element={<NotFound />} /> */}

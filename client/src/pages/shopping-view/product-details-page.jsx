@@ -131,8 +131,8 @@ function ProductDetailsPage({ open, setOpen }) {
   }, [getCurrentProductId, dispatch]);
 
   return (
-    <div className="p-4 sm:p-8">
-      <div className="grid grid-cols-1 md:grid-cols-[1.5fr_2fr] gap-8">
+    <div className="p-4 px-4 md:p-8 md:px-32">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-8">
         <div className="relative overflow-hidden rounded-lg">
 
         <ZoomableImage
@@ -170,7 +170,7 @@ function ProductDetailsPage({ open, setOpen }) {
              {/* Zoom Card */}
              {zoomData.isHovering && (
             <div
-              className="hidden md:block absolute top-[12%] left-[45%] z-10 w-1/2 h-3/4 overflow-hidden border shadow-lg bg-white"
+              className="hidden md:block absolute top-[12%] left-[35%] z-10 w-1/2 h-3/4 overflow-hidden border shadow-lg bg-white"
               style={{
                 backgroundImage: `url(${zoomData.imageSrc})`,
                 backgroundPosition: `${zoomData.zoomPosition.x}% ${zoomData.zoomPosition.y}%`,

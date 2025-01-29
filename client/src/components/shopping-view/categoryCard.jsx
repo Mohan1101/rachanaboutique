@@ -1,10 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils"; // Utility function for conditional classNames
 import { Card } from "@/components/ui/card";
 
+
+
 const CategoryCard = ({ categoryItem }) => {
+  const navigate = useNavigate();
+
+const handleClick = () => {
+  navigate(`/shop/collections?category=${categoryItem.label}`);
+};
+
     return (
-      <Card className="w-full max-w-md rounded-2xl shadow-md border border-gray-200 hover:shadow-lg transition duration-300 overflow-hidden">
+      <Card className="w-full max-w-md rounded-2xl shadow-md border border-gray-200 hover:shadow-lg transition duration-300 overflow-hidden" onClick={handleClick}>
         <div className="relative group">
           <img
             src={categoryItem.image}
