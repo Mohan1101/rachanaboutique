@@ -62,23 +62,8 @@ const brandsWithIcon = [
   { id: "h&m", label: "H&M", icon: Heater },
 ];
 
-const featureImageList = [
-  {
-    image: img1,
-    title: "Everyday is a fashion show and the world is your runway",
-    text: "Coco Chanel",
-  },
-  {
-    image: img2,
-    title: "Explore wide range of sareees from different regions",
-    text: "Coco Chanel",
-  },
-  {
-    image: img1,
-    title: "Everyday is a fashion show and the world is your runway",
-    text: "Coco Chanel",
-  },
-]
+
+
 
 const sarees = [
   {
@@ -157,6 +142,37 @@ function ShoppingHome() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
+  
+const formattedFeatureImageList = () => {
+  const { featureImageList } = useSelector((state) => state.commonFeature);
+
+  // Define titles and text for the images
+  const additionalData = [
+    {
+      title: "Everyday is a fashion show and the world is your runway",
+      text: "Coco Chanel",
+    },
+    {
+      title: "Explore wide range of sarees from different regions",
+      text: "Coco Chanel",
+    },
+    {
+      title: "Everyday is a fashion show and the world is your runway",
+      text: "Coco Chanel",
+    },
+  ];
+
+  console.log(featureImageList, "featureImageList");
+
+  // Map and format the featureImageList
+  return featureImageList.map((image, index) => ({
+    ...image,
+    title: additionalData[index % additionalData.length]?.title || "Default Title",
+    text: additionalData[index % additionalData.length]?.text || "Default Text",
+  }));
+};
+const featureImageList = formattedFeatureImageList();
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -313,7 +329,7 @@ function ShoppingHome() {
           </div>
         </div>
       </section>
-      <section className="py-12">
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Fast Moving Products

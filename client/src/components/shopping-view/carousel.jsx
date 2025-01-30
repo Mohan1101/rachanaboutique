@@ -36,7 +36,7 @@ const Carousel = ({ featureImageList }) => {
             <p className="mt-4 text-lg md:text-2xl font-light drop-shadow-md animate-fade-slide-up delay-300">
               {item?.description}
             </p>
-            <button className="mt-6 px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-800 hover:from-red-500 hover:to-pink-500 text-white text-lg rounded-lg shadow-lg transform transition-all hover:scale-105 animate-fade-slide-up delay-500">
+            <button className="mt-6 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white text-lg rounded-lg shadow-lg transform transition-all hover:scale-105 animate-fade-slide-up delay-500">
               Shop Now
             </button>
           </div>
@@ -51,7 +51,7 @@ const Carousel = ({ featureImageList }) => {
             onClick={() => setCurrentIndex(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentIndex
-                ? "bg-amber-500 border-2 border-white scale-125"
+                ? "bg-foreground border-2 border-white scale-125"
                 : "bg-gray-500"
             }`}
           ></button>

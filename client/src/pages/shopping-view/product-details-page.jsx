@@ -170,12 +170,12 @@ function ProductDetailsPage({ open, setOpen }) {
              {/* Zoom Card */}
              {zoomData.isHovering && (
             <div
-              className="hidden md:block absolute top-[12%] left-[35%] z-10 w-1/2 h-3/4 overflow-hidden border shadow-lg bg-white"
+              className="hidden md:block absolute top-[12%] left-[42%] z-10 w-1/2 h-3/4 overflow-hidden border shadow-lg bg-white"
               style={{
                 backgroundImage: `url(${zoomData.imageSrc})`,
                 backgroundPosition: `${zoomData.zoomPosition.x}% ${zoomData.zoomPosition.y}%`,
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "500%",
+                backgroundSize: "300%",
               }}
             ></div>
           )}

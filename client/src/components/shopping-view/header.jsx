@@ -27,41 +27,57 @@ function ShoppingHeader() {
 
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+
+  const messages = [
+
+    "🎉 Additional 10% off on all orders this weekend!",
+    "🚚 Free shipping on orders above ₹500!",
+    "💳 Secure payment options available!",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length);
+    }, 8000); // Change message every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   function MenuItems({ onCloseSheet }) {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
-  
+
     function handleNavigate(getCurrentMenuItem) {
       sessionStorage.removeItem("filters");
       const currentFilter =
         getCurrentMenuItem.id !== "home" &&
-        getCurrentMenuItem.id !== "collections" &&
-        getCurrentMenuItem.id !== "new-arrivals" &&
-        getCurrentMenuItem.id !== "contact"
+          getCurrentMenuItem.id !== "collections" &&
+          getCurrentMenuItem.id !== "new-arrivals" &&
+          getCurrentMenuItem.id !== "contact"
           ? {
-              category: [getCurrentMenuItem.id],
-            }
+            category: [getCurrentMenuItem.id],
+          }
           : null;
-  
+
       sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-  
+
       location.pathname.includes("collections") && currentFilter !== null
         ? setSearchParams(
-            new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
-          )
+          new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
+        )
         : navigate(getCurrentMenuItem.path);
-      
+
       onCloseSheet(); // Close the sheet when a menu item is clicked
     }
-  
+
     return (
       <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
         {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Label
             onClick={() => handleNavigate(menuItem)}
-            className="text-sm font-medium cursor-pointer"
+            className="text-md font-medium cursor-pointer"
             key={menuItem.id}
           >
             {menuItem.label}
@@ -70,28 +86,28 @@ function ShoppingHeader() {
       </nav>
     );
   }
-  
+
   function HeaderRightContent() {
     const { user } = useSelector((state) => state.auth);
     const { cartItems } = useSelector((state) => state.shopCart);
     const [openCartSheet, setOpenCartSheet] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-  
+
     function handleLogout() {
       dispatch(logoutUser());
     }
-  
+
     useEffect(() => {
       dispatch(fetchCartItems(user?.id));
     }, [dispatch]);
-  
+
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-4">
         <Sheet open={openCartSheet} onOpenChange={setOpenCartSheet}>
-        <Link to="/shop/search" className="hidden md:flex items-center gap-2">
+          <Link to="/shop/search" className="hidden md:flex items-center gap-2">
             <Search className="h-6 w-6 ml-2" />
-            <p className="text-sm">Search</p>
+            <p className="text-md">Search</p>
           </Link>
           <button
             onClick={() => setOpenCartSheet(true)}
@@ -109,7 +125,7 @@ function ShoppingHeader() {
             cartItems={cartItems?.items || []}
           />
         </Sheet>
-  
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="bg-black">
@@ -118,10 +134,10 @@ function ShoppingHeader() {
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" className="w-56" >
+          <DropdownMenuContent side="right" className="mt-24 bg-background w-56" >
             <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => (navigate("/shop/account"), setIsSheetOpen(true))}>
+            <DropdownMenuItem onClick={() => (navigate("/shop/account"), setIsSheetOpen(false))}>
               <UserCog className="mr-2 h-4 w-4" />
               Account
             </DropdownMenuItem>
@@ -137,41 +153,55 @@ function ShoppingHeader() {
   }
 
   return (
-    <header className="fixed top-0 z-40 w-full border-b bg-background">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
-        <Link to="/shop/home" className="flex items-center gap-2">
-          <span className="font-bold text-sm md:text-lg">Rachana Boutique</span>
-        </Link>
-        
-        <div className="flex items-center gap-4">
-          <Link to="/shop/search" className="block md:hidden items-center gap-2">
-            <Search className="h-6 w-6 ml-2" />
-          </Link>
-          
-          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="lg:hidden">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle header menu</span>
-              </Button>
-            </SheetTrigger>
-            
-            <SheetContent side="left" className="w-full max-w-xs">
-              <MenuItems onCloseSheet={() => setIsSheetOpen(false)} />
-              <HeaderRightContent />
-            </SheetContent>
-          </Sheet>
-        </div>
-        
-        <div className="hidden lg:block">
-          <MenuItems onCloseSheet={() => setIsSheetOpen(false)} />
-        </div>
+    <>
 
-        <div className="hidden lg:block">
-          <HeaderRightContent />
-        </div>
+
+      <header className="fixed top-0 z-40 w-full border-b bg-background">
+      <div className="announcement-bar">
+        <p className="w-64 text-sm text-center">
+        📞 Contact: +91 98765 43210
+        </p>
+      <div className="message-container">
+        <span key={currentMessageIndex} className="animate-scroll">
+          {messages[currentMessageIndex]}
+        </span>
       </div>
-    </header>
+    </div>
+        <div className="flex h-14 items-center justify-between px-4 md:px-6">
+          <Link to="/shop/home" className="flex items-center gap-2">
+            <span className="font-bold text-sm md:text-lg">Rachana Boutique</span>
+          </Link>
+
+          <div className="flex items-center gap-4">
+            <Link to="/shop/search" className="block md:hidden items-center gap-2">
+              <Search className="h-6 w-6 ml-2" />
+            </Link>
+
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" className="lg:hidden">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle header menu</span>
+                </Button>
+              </SheetTrigger>
+
+              <SheetContent side="left" className="w-full max-w-xs">
+                <MenuItems onCloseSheet={() => setIsSheetOpen(false)} />
+                <HeaderRightContent />
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          <div className="hidden lg:block">
+            <MenuItems onCloseSheet={() => setIsSheetOpen(false)} />
+          </div>
+
+          <div className="hidden lg:block">
+            <HeaderRightContent />
+          </div>
+        </div>
+      </header>
+    </>
   );
 }
 
