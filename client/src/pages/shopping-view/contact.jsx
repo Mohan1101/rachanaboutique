@@ -8,7 +8,7 @@ import banner from "../../assets/kora.png";
 const Contact = () => {
   return (
     <section className="bg-background text-foreground px-6 py-12 md:py-24">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Left Side: Image */}
         <div className="relative rounded-2xl overflow-hidden shadow-lg">
           <img
@@ -99,11 +99,11 @@ const Contact = () => {
   </form>
 
   {/* Additional Elements for Filling Space */}
-  <div className="absolute -top-8 -right-8 hidden md:block">
+  <div className="absolute -top-8 -right-8 k">
     <div className="w-20 h-20 bg-pink-500 rounded-full opacity-50"></div>
     <div className="w-16 h-16 bg-yellow-400 rounded-full opacity-75 absolute top-8 right-8"></div>
   </div>
-  <div className="absolute -bottom-8 -left-8 hidden md:block">
+  <div className="absolute -bottom-8 -left-8 k">
     <div className="w-24 h-24 bg-blue-400 rounded-full opacity-50"></div>
     <div className="w-16 h-16 bg-green-500 rounded-full opacity-75 absolute bottom-8 left-8"></div>
   </div>

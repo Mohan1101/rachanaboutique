@@ -11,8 +11,8 @@ body {
 }
 @layer base {
   :root {
-    --background: #FFFFF0;
-    --foreground: #D32F2F;
+    --background: #fed1d6;
+    --foreground: #2c3315;
     --card: #ffffff;
     --card-foreground: #333333;
     --primary: #1c1c1c;
@@ -21,7 +21,7 @@ body {
     --secondary-foreground: #e0e0e0;
     --muted: #2f2f2f;
     --muted-foreground: #999999;
-    --accent: #3c3c3c;
+    --accent: #de3956;
     --accent-foreground: #f0f0f0;
     --destructive: #e53935;
     --destructive-foreground: #ffffff;
@@ -68,6 +68,48 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .glow-effect {
+    box-shadow: 0 0 10px 2px rgba(211, 47, 47, 0.5),
+                0 0 20px 4px rgba(211, 47, 47, 0.3),
+                0 0 30px 6px rgba(211, 47, 47, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .glow-effect:hover {
+    box-shadow: 0 0 15px 4px rgba(211, 47, 47, 0.7),
+                0 0 30px 8px rgba(211, 47, 47, 0.5),
+                0 0 45px 12px rgba(211, 47, 47, 0.3);
+  }
+}
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  height: 80vh;
+  overflow-y: auto;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px; 
+  display: block; 
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
 
 
 .bg-auth-bg {

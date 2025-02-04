@@ -1,43 +1,28 @@
-// InstagramCard.jsx
 import React from "react";
+import { CircleX } from "lucide-react";
 import { InstagramEmbed } from "react-social-media-embed";
 
 const InstagramCard = ({ post, onClose }) => {
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl shadow-lg w-full max-w-4xl md:flex">
-                {/* Media Section */}
-                <div className="w-full md:w-1/2 h-auto">
-                    <InstagramEmbed url={post.media} width="100%" />
+        <div 
+            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out" 
+            onClick={onClose} // Close on click outside the card
+        >
+            {/* Card Content */}
+            <div 
+                className="relative w-full md:w-1/3 bg-white rounded-lg shadow-2xl transition-transform transform duration-300 ease-in-out"
+                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the card
+            >
+                
+                {/* Instagram Embed - Make sure it takes full height and scrollable */}
+                <div className="custom-scrollbar"> {/* Fixed height and custom scrollbar */}
+                    <InstagramEmbed url={post} width="100%" captioned />
                 </div>
-
-                {/* Details Section */}
-                <div className="w-full md:w-1/2 p-4 flex flex-col">
-                    {/* Close Button */}
-                    <button
-                        onClick={onClose}
-                        className="self-end text-gray-500 hover:text-black"
-                    >
-                        ✕
-                    </button>
-
-                    {/* Description */}
-                    <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
-                    <p className="text-gray-600 mb-4">{post.description}</p>
-
-                    {/* Comments */}
-                    <div className="flex-1 overflow-y-auto">
-                        <h3 className="font-semibold mb-2">Comments:</h3>
-                        <ul className="space-y-2">
-                            {post.comments.map((comment, index) => (
-                                <li key={index} className="text-gray-700">
-                                    <span className="font-semibold">{comment.user}</span>: {comment.text}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                
+              
             </div>
+             
+              <CircleX className="absolute top-8 right-8 w-8 h-8 text-foreground hover:text-accent cursor-pointer" onClick={onClose} />
         </div>
     );
 };

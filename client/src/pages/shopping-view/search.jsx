@@ -35,6 +35,7 @@ function SearchProducts() {
       dispatch(resetSearchResults());
     }
   }, [keyword]);
+  console.log("openDetailsDialog", openDetailsDialog);
 
   function handleAddtoCart(getCurrentProductId, getTotalStock) {
     console.log(cartItems);

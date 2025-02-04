@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Carousel = ({ featureImageList }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,7 +25,7 @@ const Carousel = ({ featureImageList }) => {
           <img
             src={item?.image}
             alt={item?.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-fit md:object-cover"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80"></div>
@@ -36,7 +38,7 @@ const Carousel = ({ featureImageList }) => {
             <p className="mt-4 text-lg md:text-2xl font-light drop-shadow-md animate-fade-slide-up delay-300">
               {item?.description}
             </p>
-            <button className="mt-6 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white text-lg rounded-lg shadow-lg transform transition-all hover:scale-105 animate-fade-slide-up delay-500">
+            <button className="mt-6 px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white text-lg rounded-lg shadow-lg transform transition-all hover:scale-105 animate-fade-slide-up delay-500" onClick={() => navigate("/shop/collections")}>
               Shop Now
             </button>
           </div>

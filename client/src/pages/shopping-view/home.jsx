@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { motion } from "framer-motion"
 import bannerOne from "../../assets/banner-1.webp";
 import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
+import bannerThree from "../../assets/saree.png";
 import { useInView } from "react-intersection-observer";
 
 import {
@@ -101,36 +101,9 @@ const sarees = [
 ];
 
 const posts = [
-  {
-      title: "Beautiful Sunset",
-      description: "A stunning sunset at the beach 🌅.",
-      media: "https://www.instagram.com/reel/DFDDWVASD2l/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==", // Replace with actual image/video URL
-      type: "image", // Can be 'image' or 'video'
-      comments: [
-          { user: "user1", text: "Amazing view!" },
-          { user: "user2", text: "Wish I were there!" },
-      ],
-  },
-  {
-      title: "City Lights",
-      description: "Night vibes in the city 🌃.",
-      media: "https://www.instagram.com/reel/DFDDWVASD2l/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==", // Replace with actual image/video URL
-      type: "image",
-      comments: [
-          { user: "user3", text: "Love the lights!" },
-          { user: "user4", text: "Incredible shot!" },
-      ],
-  },
-  {
-      title: "Waterfall",
-      description: "Peaceful and serene 🏞️.",
-      media: "https://www.instagram.com/reel/DFDDWVASD2l/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==", // Replace with actual image/video URL
-      type: "video",
-      comments: [
-          { user: "user5", text: "So relaxing!" },
-          { user: "user6", text: "Where is this?" },
-      ],
-  },
+  "https://www.instagram.com/reel/DFfVJZaS4fN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+  "https://www.instagram.com/reel/DE3jtv2z14O/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+  "https://www.instagram.com/reel/DD4uGbbSyl8/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
 ];
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -142,36 +115,37 @@ function ShoppingHome() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
-  
-const formattedFeatureImageList = () => {
-  const { featureImageList } = useSelector((state) => state.commonFeature);
 
-  // Define titles and text for the images
-  const additionalData = [
-    {
-      title: "Everyday is a fashion show and the world is your runway",
-      text: "Coco Chanel",
-    },
-    {
-      title: "Explore wide range of sarees from different regions",
-      text: "Coco Chanel",
-    },
-    {
-      title: "Everyday is a fashion show and the world is your runway",
-      text: "Coco Chanel",
-    },
-  ];
+  const formattedFeatureImageList = () => {
+    const { featureImageList } = useSelector((state) => state.commonFeature);
 
-  console.log(featureImageList, "featureImageList");
+    // Define titles and text for the images
+    const additionalData = [
+      {
+        title: "Everyday is a fashion show and the world is your runway",
+        text: "Coco Chanel",
+      },
+      {
+        title: "Explore wide range of sarees from different regions",
+        text: "Coco Chanel",
+      },
+      {
+        title: "Everyday is a fashion show and the world is your runway",
+        text: "Coco Chanel",
+      },
+    ];
 
-  // Map and format the featureImageList
-  return featureImageList.map((image, index) => ({
-    ...image,
-    title: additionalData[index % additionalData.length]?.title || "Default Title",
-    text: additionalData[index % additionalData.length]?.text || "Default Text",
-  }));
-};
-const featureImageList = formattedFeatureImageList();
+    console.log("openDetailsDialog", openDetailsDialog);
+
+
+    // Map and format the featureImageList
+    return featureImageList.map((image, index) => ({
+      ...image,
+      title: additionalData[index % additionalData.length]?.title || "Default Title",
+      text: additionalData[index % additionalData.length]?.text || "Default Text",
+    }));
+  };
+  const featureImageList = formattedFeatureImageList();
 
 
   const dispatch = useDispatch();
@@ -182,6 +156,11 @@ const featureImageList = formattedFeatureImageList();
   const wrapperRef = useRef(null);
   const timeoutRef = useRef(null);
   const { ref, inView } = useInView({
+    rootMargin: window.innerWidth <= 768 ? "2100px" : "100px",
+    threshold: 0.2,
+  });
+
+  const { fastMovingRef, fastMovingInView } = useInView({
     rootMargin: window.innerWidth <= 768 ? "1750px" : "200px",
     threshold: 0.2,
   });
@@ -228,7 +207,7 @@ const featureImageList = formattedFeatureImageList();
         productId: getCurrentProductId,
         quantity: 1,
       })
-    ).then((data) => { 
+    ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
@@ -271,19 +250,22 @@ const featureImageList = formattedFeatureImageList();
         <Carousel featureImageList={featureImageList} />
 
       </div>
-      <section className="py-12 bg-gray-50 -mt-10 md:mt-12">
+      <section className="py-12 -mt-10 md:mt-12">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by category
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Shop by category</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {categoriesWithIcon.map((categoryItem, index) => (
               <motion.div
                 key={categoryItem.id || index}
-                ref={ref}
                 initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }} // Trigger the animation when 30% of the card is in view
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.3, // Delay between each card based on its index
+                  type: "spring", // Smooth spring animation
+                  stiffness: 100,
+                }}
               >
                 <CategoryCard categoryItem={categoryItem} />
               </motion.div>
@@ -311,7 +293,7 @@ const featureImageList = formattedFeatureImageList();
         </div>
       </section> */}
 
-      <section className="py-12">
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
@@ -329,7 +311,7 @@ const featureImageList = formattedFeatureImageList();
           </div>
         </div>
       </section>
-      <section className="py-12 bg-gray-50">
+      <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Fast Moving Products
@@ -337,27 +319,38 @@ const featureImageList = formattedFeatureImageList();
 
         </div>
         <div className="flex h-full w-full items-center justify-center px-2">
-          <div className="w-[1200px] max-w-full">
+          <div className="container mx-auto px-4">
             <ul
               ref={wrapperRef}
               className="group flex flex-col gap-3 md:h-[640px] md:flex-row md:gap-[1.5%]"
             >
               {sarees.map((item, index) => (
-                <li
+                <motion.li
+                  ref={ref}
                   onClick={() => setActiveItem(index)}
                   aria-current={activeItem === index}
+                  initial={{ x: -100, opacity: 0 }}
+                  animate={{
+                    x: inView ? 0 : -100,
+                    opacity: inView ? 1 : 0,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 50,
+                    damping: 25,
+                  }}
                   className={classNames(
-                    "relative cursor-pointer md:w-[16%] md:first:w-[16%] md:last:w-[16%] md:[&[aria-current='true']]:w-[48%]",
+                    "relative cursor-pointer md:w-[16%] md:first:w-[16%] md:last:w-[16%] md:[&[aria-current='true']]:w-[40%]",
                     "md:[transition:width_var(--transition,200ms_ease-in)]",
                     "md:before-block before:absolute before:bottom-0 before:left-[-10px] before:right-[-10px] before:top-0 before:hidden before:bg-white",
                     "md:[&:not(:hover),&:not(:first),&:not(:last)]:group-hover:w-[14%] md:hover:w-[20%]",
-                    "first:pointer-events-auto last:pointer-events-auto", // Enable interactions for first and last items
+                    "first:pointer-events-auto last:pointer-events-auto",
                     "md:[&_img]:opacity-100"
                   )}
                   key={item.name}
                 >
                   <FastMovingCard item={item} index={index} activeItem={activeItem} />
-                </li>
+                </motion.li>
               ))}
             </ul>
           </div>
@@ -365,18 +358,25 @@ const featureImageList = formattedFeatureImageList();
 
       </section>
 
-      <section className="py-12">
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Checkout our Instagram Feed
           </h2>
 
-      <InstagramFeed posts={posts} />
-              
+          <InstagramFeed posts={posts} />
+
         </div>
       </section>
+      <section>
 
-      <Banner imageUrl={bannerThree} altText="Banner 3" />
+      <Banner
+        imageUrl={bannerThree}
+        altText="Banner 3"
+        description="Exciting Offers & Discounts. Don't miss out! Shop now and save big. Best deals on your favorite products."
+      />
+      </section>
+
 
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">

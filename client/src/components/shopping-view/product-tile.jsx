@@ -51,8 +51,8 @@ function ShoppingProductTile({
           {product?.title}
         </h2>
         <div className="flex justify-between items-center text-sm text-gray-500 mb-2">
-          <span>{categoryOptionsMap[product?.category]}</span>
-          <span>{brandOptionsMap[product?.brand]}</span>
+          {/* <span>{categoryOptionsMap[product?.category]}</span>
+          <span>{brandOptionsMap[product?.brand]}</span> */}
         </div>
         <div className="flex justify-between items-center">
           <span

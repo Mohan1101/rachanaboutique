@@ -1,4 +1,4 @@
-import { HousePlug, LogOut, Menu, ShoppingCart, UserCog, Search } from "lucide-react";
+import { HousePlug, LogOut, Menu, ShoppingCart, UserCog, Search, Phone } from "lucide-react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
@@ -77,15 +77,19 @@ function ShoppingHeader() {
         {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Label
             onClick={() => handleNavigate(menuItem)}
-            className="text-md font-medium cursor-pointer"
+            className="text-md font-medium cursor-pointer relative group pb-1" // Added padding bottom
             key={menuItem.id}
           >
             {menuItem.label}
+            {/* Bar effect with adjusted position */}
+            <span className="hidden md:block absolute left-0 bottom-[-2px] w-0 h-1 bg-foreground transition-all duration-1000 group-hover:w-full group-hover:left-0"></span>
           </Label>
         ))}
       </nav>
+
     );
   }
+
 
   function HeaderRightContent() {
     const { user } = useSelector((state) => state.auth);
@@ -157,16 +161,17 @@ function ShoppingHeader() {
 
 
       <header className="fixed top-0 z-40 w-full border-b bg-background">
-      <div className="announcement-bar">
-        <p className="w-64 text-sm text-center">
-        📞 Contact: +91 98765 43210
-        </p>
-      <div className="message-container">
-        <span key={currentMessageIndex} className="animate-scroll">
-          {messages[currentMessageIndex]}
-        </span>
-      </div>
-    </div>
+        <div className="announcement-bar">
+          <p className="w-64 text-sm text-center flex items-center justify-center">
+            <Phone className="h-4 w-4 mr-2" />
+            Contact: +91 98765 43210
+          </p>
+          <div className="message-container">
+            <span key={currentMessageIndex} className="animate-scroll">
+              {messages[currentMessageIndex]}
+            </span>
+          </div>
+        </div>
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <Link to="/shop/home" className="flex items-center gap-2">
             <span className="font-bold text-sm md:text-lg">Rachana Boutique</span>

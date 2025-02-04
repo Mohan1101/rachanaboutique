@@ -1,5 +1,4 @@
-import { StarIcon, ExternalLink} from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
@@ -21,12 +20,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { reviews } = useSelector((state) => state.shopReview);
-
-  const navigate = useNavigate();
-
-  const handleViewDetails = (id) => {
-    navigate(`/shop/details/${id}`); 
-  }
 
   const { toast } = useToast();
 
@@ -108,7 +101,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const averageReview =
     reviews && reviews.length > 0
       ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
-      reviews.length
+        reviews.length
       : 0;
 
   return (
@@ -125,16 +118,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         </div>
         <div className="">
           <div>
-            <h1 className="text-3xl font-extrabold flex items-center">
-              {productDetails?.title}
-              <span
-                className="ml-2 cursor-pointer"
-                onClick={() => (setOpen(false), handleViewDetails(productDetails?._id))}
-              >
-                <ExternalLink className="mt-1 text-blue-500" />
-              </span>
-            </h1>
-
+            <h1 className="text-3xl font-extrabold">{productDetails?.title}</h1>
             <p className="text-muted-foreground text-2xl mb-5 mt-4">
               {productDetails?.description}
             </p>
